@@ -66,6 +66,66 @@ npm run src:push
 npm run org:open
 ```
 
+### ロック解除済みパッケージの作成
+
+```
+sfdx force:package:create --name "Flow Component OuputField Sample" --path force-app --packagetype Unlocked
+```
+
+### 作成したロック解除済みパッケージリストの確認
+
+```
+sfdx force:package:list
+```
+
+### ロック解除済みパッケージバージョンの作成
+
+```
+sfdx force:package:version:create --package "Flow Component OuputField Sample" --codecoverage --installationkeybypass --wait 10
+```
+
+### 作成したロック解除済みパッケージバージョンリストの確認
+
+```
+sfdx force:package:version:list --packages "Flow Component OuputField Sample"
+```
+
+### パッケージインストール用スクラッチ組織の作成
+
+```
+sfdx force:org:create --definitionfile config/project-scratch-def.json -a output_field_package_install_SCRATCH
+```
+
+### ロック解除済みパッケージのインストール
+
+```
+sfdx force:package:install --package <SubscriberPackageVersionId> -u output_field_package_install_SCRATCH --wait 10 --publishwait 10
+```
+
+### パッケージのインストール確認
+
+```
+sfdx force:org:open -u output_field_package_install_SCRATCH
+```
+
+### ロック解除済みパッケージのリリース
+
+```
+sfdx force:package:version:promote --package <SubscriberPackageVersionId>
+```
+
+### ロック解除済みパッケージバージョンの削除
+
+```
+sfdx force:package:version:delete --package <SubscriberPackageVersionId>
+```
+
+### ロック解除済みパッケージの削除
+
+```
+sfdx force:package:delete --package <PackageId>
+```
+
 ## License
 
 MIT License
