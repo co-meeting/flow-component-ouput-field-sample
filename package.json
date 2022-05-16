@@ -14,6 +14,7 @@
     "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "postinstall": "husky install",
     "precommit": "lint-staged",
+    "org:create": "sfdx force:org:create -f ./config/project-scratch-def.json -s -a flow_component_ouput_field_sample_SCRATCH -d ${EXPIRED_DATE:=30} -w 20",
     "org:open": "sfdx force:org:open -u flow_component_ouput_field_sample_SCRATCH",
     "src:push": "sfdx force:source:push -u flow_component_ouput_field_sample_SCRATCH",
     "srccopy:unofficialsf:pickup": "bash ./scripts/shell/unofficialsf-src-pickup-copy.sh"
