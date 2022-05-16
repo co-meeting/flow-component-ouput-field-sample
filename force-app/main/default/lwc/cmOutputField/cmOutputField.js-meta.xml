@@ -8,7 +8,7 @@
       <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
-      <targetConfig targets="lightning__FlowScreen">
+      <targetConfig targets="lightning__FlowScreen" configurationEditor="c-cm-output-field-editor">
         <propertyType name="T" extends="SObject" label="オブジェクト" />
         <property label="レコード" name="record" role="inputOnly" type="{T}" />
         <property label="オブジェクト名" name="objectName" type="String" role="inputOnly" />

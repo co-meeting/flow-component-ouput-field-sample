@@ -1,0 +1,28 @@
+<template>
+  <div class="slds-p-around_xx-small">
+    <lightning-input
+      name="record"
+      label={inputValues.record.label}
+      value={inputValues.record.value}
+      type="text"
+      onchange={handleChangeRecord}
+    >
+    </lightning-input>
+   <lightning-input
+      disabled
+      name="objectName"
+      label={inputValues.objectName.label}
+      value={inputValues.objectName.value}
+      type="text"
+    >
+    </lightning-input>
+    <lightning-input
+      name="fieldName"
+      label={inputValues.fieldName.label}
+      value={inputValues.fieldName.value}
+      type="text"
+      onchange={handleChangeFieldName}
+    >
+    </lightning-input>
+  </div>
+</template>
