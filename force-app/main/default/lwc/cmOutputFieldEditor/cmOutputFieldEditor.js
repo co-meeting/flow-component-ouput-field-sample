@@ -1,30 +1,31 @@
-import { LightningElement, track, api } from "lwc";
+import { LightningElement, track, api } from 'lwc';
 
 export default class CmOutputFieldEditor extends LightningElement {
   _inputVariables = [];
   _genericTypeMappings;
 
   @api builderContext = {};
+  @api automaticOutputVariables;
 
   @track
   inputValues = {
     objectName: {
       value: null,
-      valueDataType: "string",
+      valueDataType: 'string',
       isCollection: false,
-      label: "オブジェクト"
+      label: 'S オブジェクト種別'
     },
     record: {
       value: null,
-      valueDataType: "reference",
+      valueDataType: 'reference',
       isCollection: false,
-      label: "レコード"
+      label: 'レコード'
     },
     fieldName: {
       value: null,
-      valueDataType: "string",
+      valueDataType: 'string',
       isCollection: false,
-      label: "項目名"
+      label: '項目名'
     }
   };
 
@@ -57,18 +58,17 @@ export default class CmOutputFieldEditor extends LightningElement {
   }
 
   _initializeObjectName() {
-    const type = this.genericTypeMappings.find(
-      ({ typeName }) => typeName === "T"
-    );
+    const type = this.genericTypeMappings.find(({ typeName }) => typeName === 'T');
     this.inputValues.objectName.value = type && type.typeValue;
   }
 
   handleChangeRecord(event) {
     if (event.target && event.detail) {
-      const lookupReferenceName = event.detail.value;
+      const lookupReferenceName = event.detail.newValue;
       // レコードのobjectNameを取得
       const lookupRecordObjectName = this._getRecordLookupsObjectName(lookupReferenceName);
-      if (lookupRecordObjectName !== null) {
+
+      if (lookupRecordObjectName != null) {
         // propertyType name="T"に対する設定
         this._dispatchFlowTypeMappingChangeEvent('T', lookupRecordObjectName);
         // property name="objectName"に対する設定
@@ -79,13 +79,15 @@ export default class CmOutputFieldEditor extends LightningElement {
         this._dispatchFlowValueChangeEvent('objectName', '', 'string');
         this._dispatchFlowValueChangeEvent('record', '', 'reference');
         this._dispatchFlowValueChangeEvent('fieldName', '', 'string');
-        this.inputValues.objectName.value = '';
-        this.inputValues.fieldName.value = '';
       }
     }
   }
 
   _getRecordLookupsObjectName(lookupRecordName) {
+    if (!this.builderContext.recordLookups) {
+      return null;
+    }
+
     const lookupRecord = this.builderContext.recordLookups.find(
       ({ name }) => name === lookupRecordName
     );
@@ -106,35 +108,29 @@ export default class CmOutputFieldEditor extends LightningElement {
   }
 
   _dispatchFlowValueChangeEvent(id, newValue, newValueDataType) {
-    const valueChangedEvent = new CustomEvent(
-      "configuration_editor_input_value_changed",
-      {
-        bubbles: true,
-        cancelable: false,
-        composed: true,
-        detail: {
-          name: id,
-          newValue: newValue ? newValue : null,
-          newValueDataType: newValueDataType
-        }
+    const valueChangedEvent = new CustomEvent('configuration_editor_input_value_changed', {
+      bubbles: true,
+      cancelable: false,
+      composed: true,
+      detail: {
+        name: id,
+        newValue: newValue ? newValue : null,
+        newValueDataType: newValueDataType
       }
-    );
+    });
     this.dispatchEvent(valueChangedEvent);
   }
 
   _dispatchFlowTypeMappingChangeEvent(typeName, typeValue) {
-    const typeChangedEvent = new CustomEvent(
-      "configuration_editor_generic_type_mapping_changed",
-      {
-        bubbles: true,
-        cancelable: false,
-        composed: true,
-        detail: {
-          typeName,
-          typeValue
-        }
+    const typeChangedEvent = new CustomEvent('configuration_editor_generic_type_mapping_changed', {
+      bubbles: true,
+      cancelable: false,
+      composed: true,
+      detail: {
+        typeName,
+        typeValue
       }
-    );
+    });
     this.dispatchEvent(typeChangedEvent);
   }
 }
