@@ -38,3 +38,6 @@ $RECYCLE.BIN/
 
 # Local environment variables
 .env
+
+# unofficialsfのソースコード
+force-app/main/UnofficialSF/
