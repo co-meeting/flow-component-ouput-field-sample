@@ -60,6 +60,18 @@ npm run srccopy:unofficialsf:pickup
 npm run src:push
 ```
 
+### スクラッチ組織を再作成してソースをデプロイ(Push)
+
+```
+npm run setupd
+```
+
+### （有効期限切れの場合）スクラッチ組織を作成してソースをデプロイ(Push)
+
+```
+npm run setup
+```
+
 ### 作成したスクラッチ組織を Web ページで開く
 
 ```
