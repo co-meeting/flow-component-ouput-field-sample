@@ -48,10 +48,14 @@ npm run org:create
 
 ### unofficialsf のソース取り込み
 
-スクラッチ組織の作成直後は、スクラッチ組織へソースをデプロイ(Push)する前に、以下のコマンドを実行して、unofficialsf のソースコードを取り込む。
+スクラッチ組織の作成直後は、スクラッチ組織へソースをデプロイ(Push)する前に、以下のコマンドを実行して、unofficialsf のパッケージをスクラッチ組織にインストールしてください。
 
 ```
-npm run srccopy:unofficialsf:pickup
+// FlowActionsBasePack Version 3.0.0 Managed
+sfdx force:package:install --package 04t8b000001Eh4YAAS -w 15 --publishwait 15
+
+// FlowScreenComponentsBasePack  Version 3.0.6 Unmanaged
+sfdx force:package:install --package 04t5G000003rUvVQAU -w 15 --publishwait 15
 ```
 
 ### スクラッチ組織へソースをデプロイ(Push)
@@ -79,6 +83,34 @@ npm run org:open
 ```
 
 ### ロック解除済みパッケージの作成
+
+UnofficialSFのパッケージが組織にインストールされている前提で実装しているため、
+sfdx-project.jsonを開き、以下のdependenciesプロパティを追記してください。
+
+```
+   "packageDirectories": [
+       {
+           "path": "force-app",
+           "default": true,
+           "package": "Flow Component OuputField Sample",
+           "versionName": "ver 0.1",
+           "versionNumber": "0.1.0.NEXT",
+           "dependencies": [
+             {
+                "package": "04t8b000001Eh4YAAS"
+             },
+             {
+               "package": "04t5G000003rUvVQAU"
+             }
+         ]
+       }
+   ],
+```
+
+- 04t8b000001Eh4YAAS:FlowActionsBasePack@3.0.0のパッケージバージョンIDです
+ - 04t5G000003rUvVQAU:FlowScreenComponentsBasePack@3.0.6のパッケージバージョンIDです
+
+上記の対応後に以下のコマンドを実行してパッケージバージョンを作成してください。
 
 ```
 sfdx force:package:create --name "Flow Component OuputField Sample" --path force-app --packagetype Unlocked
@@ -143,16 +175,15 @@ sfdx force:package:delete --package <PackageId>
 MIT License
 [LICENSE](LICENSE)
 
-#### 一部 `BSD 3-Clause License`　です。
+## 連動パッケージ
+ - FlowActionsBasePack Version 3.0.0 Managed
+ - FlowScreenComponentsBasePack  Version 3.0.6 Unmanaged
+
+Flow Component OuputField Sample では、 [Flow Action and Screen Component BasePacks – UnofficialSF](https://unofficialsf.com/flow-action-and-screen-component-basepacks/) にて、 [Alex Edelstein](https://unofficialsf.com/author/alexed1000/) が公開してくれている以下サポートツールのソースコードを、CmOutputField コンポーネントのカスタムプロパティエディタ構築の際に利用してます。
 
 - [Flow Combobox](https://unofficialsf.com/develop-custom-property-editors-quickly-with-flowcombobox/)
 - [Object and Field Picker](https://unofficialsf.com/add-an-object-and-field-picklist-pair-to-your-flow/)
 
-Flow Component Samples では、 [Flow Action and Screen Component BasePacks – UnofficialSF](https://unofficialsf.com/flow-action-and-screen-component-basepacks/) にて、 [Alex Edelstein](https://unofficialsf.com/author/alexed1000/) が公開してくれている以下サポートツールのソースコードを、CmOutputField コンポーネントのカスタムプロパティエディタ構築の際に利用してます。
-該当ソースコード(`sfdx-src/managed/main/UnofficialSF`)はそのまま改変せず利用しており、当フォルダ配下は`BSD 3-Clause License`です。
-
-License:
-BSD 3-Clause License, https://github.com/alexed1/LightningFlowComponents/blob/master/LICENSE
 
 Source:
 https://github.com/alexed1/LightningFlowComponents/
