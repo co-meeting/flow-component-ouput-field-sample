@@ -1,5 +1,6 @@
 <template>
   <div class="slds-p-around_xx-small">
+    <!-- 入力フォーム：レコード=>利用: Flow Combobox -->
     <c-fsc_flow-combobox
       name="record"
       label={inputValues.record.label}
@@ -10,6 +11,7 @@
       automatic-output-variables={automaticOutputVariables}
       onvaluechanged={handleChangeRecord}
     ></c-fsc_flow-combobox>
+    <!-- 入力フォーム：オブジェクト (レコードから自動算出したオブジェクト名を表示)-->
     <lightning-input
       name="objectName"
       disabled
@@ -18,13 +20,14 @@
       value={inputValues.objectName.value}
     >
     </lightning-input>
-    <c-fsc_pick-object-and-field
+    <!-- 入力フォーム：項目名=>利用: Object and Field Picker -->
+    <c-fsc_pick-object-and-field3
       name="fieldName"
       field-label={inputValues.fieldName.label}
       object-type={inputValues.objectName.value}
       field={inputValues.fieldName.value}
       hide-object-picklist="true"
       onfieldselected={handleChangeFieldName}
-    ></c-fsc_pick-object-and-field>
+    ></c-fsc_pick-object-and-field3>
   </div>
-</template>
+ </template>
